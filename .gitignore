@@ -1,0 +1,6 @@
+node_modules/
+dist/*.map
+*.local
+.DS_Store
+Thumbs.db
+d34ca8fe-4fc8-47b4-b86c-313610e3b587.txt

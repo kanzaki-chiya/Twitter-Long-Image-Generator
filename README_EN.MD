@@ -2,79 +2,72 @@
 
 <p align="center">
   <a href="https://vitejs.dev/" target="_blank"><img src="https://img.shields.io/badge/Build-Vite-646cff?style=flat-square&logo=vite" alt="Vite"></a>
-  <a href="https://vuejs.org/" target="_blank"><img src="https://img.shields.io/badge/Framework-Vue_3-4FC08D?style=flat-square&logo=vue.js" alt="Vue 3"></a>
+  <a href="https://www.typescriptlang.org/" target="_blank"><img src="https://img.shields.io/badge/Language-TypeScript-3178C6?style=flat-square&logo=typescript" alt="TypeScript"></a>
   <a href="https://github.com/zumerlab/snapdom" target="_blank"><img src="https://img.shields.io/badge/Render-SnapDOM-ff6b6b?style=flat-square" alt="SnapDOM"></a>
   <a href="https://www.tampermonkey.net/" target="_blank"><img src="https://img.shields.io/badge/Platform-Tampermonkey-000000?style=flat-square&logo=tampermonkey" alt="Tampermonkey"></a>
   <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square" alt="License: MIT"></a>
 </p>
 
-> A Tampermonkey userscript to losslessly generate a beautiful long image from a single tweet or a complete conversation chain on Twitter (X).
+> A Tampermonkey userscript that exports a single tweet or a reply chain on Twitter / X as one high-resolution image.
 >
-> Say goodbye to the hassle of manually stitching screenshots and share complete conversations with just one click.
+> [中文说明](./README.md)
+
+Current version: **1.9.13**
 
 ---
 
-## Key Highlights
+## Features
 
-Compared to most similar tools that use the `html2canvas` solution, this project adopts a brand-new architecture designed to provide **industrial-grade rendering speed** and **pixel-perfect restoration**.
-
-* #### Blazing Fast Rendering Core
-    * Abandons inefficient Canvas simulation rendering and adopts [**SnapDOM**](https://github.com/zumerlab/snapdom) as the core rendering engine.
-    * Leverages the `foreignObject` feature of SVG to invoke the browser's native rendering capabilities, increasing screenshot generation speed by **over 10 times**, making long conversation generation almost instantaneous.
-
-* #### Pixel-Perfect Restoration
-    * Perfectly handles Twitter's dynamic obfuscated CSS class names, ensuring the image style matches the official page exactly.
-    * Built-in **Twemoji** support automatically fixes Emoji display misalignment on Windows/Linux, achieving a unified visual experience across all platforms.
-
-* #### Modern Engineering Architecture
-    * Built with **Vite + Vue 3**, rejecting "spaghetti code".
-    * Provides complete modularization (ESM), Hot Module Replacement (HMR), and Tree-shaking support for a smooth and silky development experience.
+- Adds a download button to the tweet action bar.
+- **Reply path**: clicking a reply exports the original post, the parent-reply chain, and the tweet you clicked. Ads and sibling replies are skipped.
+- Nested replies (reply-to-reply, and deeper) walk the parent chain back to the original post.
+- Output is sorted oldest to newest by tweet ID, so Twitter’s reversed ancestor DOM does not scramble the image.
+- Avatar connector line; engagement row uses official-style SVG icons (reply / repost / like / views).
+- Quoted tweets, multiple images, and Twemoji are included.
+- On the timeline, only the current tweet is exported.
 
 ---
 
-## Installation & Usage
+## Install
 
-1.  **Install Browser Extension**
-    * First, you need to install the [Tampermonkey](https://www.tampermonkey.net/) extension in your browser.
+1. Install [Tampermonkey](https://www.tampermonkey.net/).
+2. Install the script either from [GreasyFork](https://greasyfork.org/zh-CN/scripts/556227-%E6%8E%A8%E7%89%B9%E9%95%BF%E5%9B%BE%E7%94%9F%E6%88%90) or by opening [`dist/twitter-long-image-generator.user.js`](./dist/twitter-long-image-generator.user.js) in Tampermonkey.
+3. Open a tweet on `x.com` / `twitter.com` and click the download icon next to like / repost.
 
-2.  **Install Script**
-    * Click the link below for one-click installation:
-    * [ **Install from GreasyFork** ](https://greasyfork.org/zh-CN/scripts/556227-%E6%8E%A8%E7%89%B9%E9%95%BF%E5%9B%BE%E7%94%9F%E6%88%90)
-    * *(Alternative: You can also download the `.user.js` file from the `dist/` directory of this project and manually drag it into the Tampermonkey extension to install)*
-
-3.  **Start Using**
-    * Open any tweet detail page, find the new **Download Icon 📥** in the action bar below (next to Like/Retweet) and click it.
-    * The script will automatically recognize whether it is a single tweet or a conversation and intelligently capture the context (supporting up to 50 levels) to generate a complete long image with one click.
+After updating, reinstall the file from `dist/` and refresh the tweet page.
 
 ---
 
-## Local Development
+## What gets exported
 
-If you wish to contribute code or perform secondary development, you can set up the local environment by following these steps.
+| Where you click | What appears in the image |
+| --- | --- |
+| A tweet on the timeline | That tweet only |
+| The focused post on a status page | Ancestors above it (if any) + itself |
+| A reply under the original post | Original + that reply |
+| A nested reply | Original + the parent chain + the tweet you clicked |
+
+Sibling replies and ads are not included. A chain is capped at 50 tweets.
+
+---
+
+## Development
 
 ```bash
-# 1. Clone the project locally
-git clone [https://github.com/kanzakichiya/Twitter-Long-Image-Generator.git](https://github.com/kanzakichiya/Twitter-Long-Image-Generator.git)
-
-# 2. Enter the project directory and install dependencies
+git clone https://github.com/kanzaki-chiya/Twitter-Long-Image-Generator.git
 cd Twitter-Long-Image-Generator
 npm install
-
-# 3. Start the development server (supports HMR)
-# This command will generate a development script link
-# Install this link in Tampermonkey to preview your changes in real-time
-npm run dev
-
-# 4. Build for production
-# The final .user.js file will be output to the dist directory
-npm run build
+npm run dev      # install the printed userscript URL in Tampermonkey
+npm test         # vitest
+npm run build    # writes dist/twitter-long-image-generator.user.js
 ```
 
------
+Stack: Vite + TypeScript + SnapDOM. Tests use Vitest and jsdom.
+
+---
 
 ## License
 
-This project is released under the [MIT License](https://choosealicense.com/licenses/mit/).
+[MIT License](./LICENSE)
 
-© 2025 Kanzaki Chiya
-
+© 2025–2026 kanzaki-chiya

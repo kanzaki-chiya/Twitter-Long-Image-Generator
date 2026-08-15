@@ -1,28 +1,32 @@
 {
   "name": "twitter-long-image-generator",
-  "version": "1.0.0",
-  "description": "一个用于将 Twitter (X) 推文转换为高质量长图片的油猴脚本。",
-  "main": "推特长图生成.user.js",
+  "version": "1.9.13",
+  "private": true,
+  "type": "module",
+  "description": "将 Twitter (X) 推文或对话链导出为高清长图的油猴脚本。",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test": "vitest run"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kanzakichiya/Twitter-Long-Image-Generator.git"
+    "url": "git+https://github.com/kanzaki-chiya/Twitter-Long-Image-Generator.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "kanzaki-chiya",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kanzakichiya/Twitter-Long-Image-Generator/issues"
+    "url": "https://github.com/kanzaki-chiya/Twitter-Long-Image-Generator/issues"
   },
-  "homepage": "https://github.com/kanzakichiya/Twitter-Long-Image-Generator#readme",
-  "devDependencies": {
-    "vite": "^7.2.2",
-    "vite-plugin-monkey": "^7.1.5"
-  },
+  "homepage": "https://github.com/kanzaki-chiya/Twitter-Long-Image-Generator#readme",
   "dependencies": {
-    "@zumer/snapdom": "^2.0.0",
-    "twemoji": "^14.0.2"
+    "@zumer/snapdom": "2.23.1"
+  },
+  "devDependencies": {
+    "jsdom": "30.0.1",
+    "typescript": "7.0.2",
+    "vite": "8.2.0",
+    "vite-plugin-monkey": "8.1.0",
+    "vitest": "4.1.10"
   }
 }

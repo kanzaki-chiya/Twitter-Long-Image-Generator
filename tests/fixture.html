@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>推文长图样本</title>
+    <style>
+      body { margin: 0; padding: 24px; font: 16px sans-serif; }
+      [data-testid="cellInnerDiv"] { width: 600px; margin: 0 auto; }
+      article[data-testid="tweet"] { padding: 16px; border: 1px solid #eff3f4; }
+      [role="group"] { display: flex; gap: 24px; width: 420px; height: 40px; margin: 12px auto; }
+      [role="group"] button { width: 56px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div data-testid="cellInnerDiv" class="r-1canivw">
+        <article data-testid="tweet">
+          <div data-testid="User-Name">
+            <a href="/sample-user"><div><span>样本用户</span></div></a>
+            <span>@sample-user</span>
+          </div>
+          <a href="/sample-user/status/2"><time>10:01</time></a>
+          <div data-testid="tweetText" lang="zh">前一条连续内容</div>
+        </article>
+      </div>
+      <div data-testid="cellInnerDiv">
+        <article data-testid="tweet" id="main-tweet">
+          <div data-testid="Tweet-User-Avatar"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=" /></div>
+          <div data-testid="User-Name">
+            <a href="/sample-user"><div><span>样本用户</span></div></a>
+            <span>@sample-user</span>
+          </div>
+          <a href="/sample-user/status/3"><time>10:02</time></a>
+          <div data-testid="tweetText" lang="zh">当前推文 123 😀</div>
+          <div data-testid="tweetPhoto"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=" /></div>
+        </article>
+      </div>
+      <div role="group" id="detail-actions">
+        <button aria-label="Reply">回复</button>
+        <button aria-label="Repost">转发</button>
+        <button aria-label="Like">喜欢</button>
+        <button aria-label="Share">分享</button>
+      </div>
+    </main>
+    <script>
+      history.replaceState(null, '', '/sample-user/status/3');
+    </script>
+    <script src="/dist/twitter-long-image-generator.user.js"></script>
+  </body>
+</html>
